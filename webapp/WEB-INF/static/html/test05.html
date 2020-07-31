@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<style>
+	#div1	{
+		width: 1000px;
+	}
+	div	{ width:500px; border:1px solid black; float:left; margin:10px; }
+</style>
+<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+<script>
+	
+	$(document).ready(
+		function()		{
+			$("#btn1").on("click",
+				function (e) {
+					$.ajax(
+						{
+							url : "http://www.kobis.or.kr/kobisopenapi/webservice/rest/boxoffice/searchDailyBoxOfficeList.json?key=a1f86bc4b1ae63ffced7ca669992a8f9&targetDt=20200729",
+							//data: {v:"1234"},
+							dataType : "json",
+							success : function(data)	{
+								console.log(data);
+								alert(data);
+								
+								var list = data.boxOfficeResult.dailyBoxOfficeList;
+								
+								var strHTML = "";
+								
+								$.each(list,
+									function(index, dailyBoxOffice)	{
+										console.log(dailyBoxOffice);
+										strHTML += "<div>";
+										strHTML += "<p>movieNm : " + dailyBoxOffice.movieNm + "</p>";
+										strHTML += "<p>movieCd : " + dailyBoxOffice.movieCd + "</p>";
+										strHTML += "</div>";
+									}		
+								);
+								
+								$("#div1").html(strHTML);
+							},
+							error   : function(xhr)	{
+								console.log(xhr)
+								alert("애송이뇨속");
+							}
+						}		
+					);
+				}
+			);
+			
+			$("#btn2").on("click",
+				function (e) {
+					$.ajax(
+						{
+							url : "http://www.kobis.or.kr/kobisopenapi/webservice/rest/boxoffice/searchDailyBoxOfficeList.xml?key=a1f86bc4b1ae63ffced7ca669992a8f9&targetDt=20200729",
+							//data: {v:"1234"},
+							dataType : "xml",
+							success : function(xml)	{
+								console.log(xml);
+								alert(xml);
+								
+								var html = "";
+								
+								$(xml).find("dailyBoxOffice").each(
+									function(index) {
+										console.log($(this));
+										html += "<div>";
+										html += "<p>영화이름 : " + $(this).find("movieNm").text() + "</p>";
+										html += "<p>영화Cd   : " + $(this).find("movieCd").text() + "</p>";
+										html += "</div>";									
+									}
+								);
+								
+								$("#div1").html(html);
+							},
+							error   : function(xhr)	{
+								console.log(xhr)
+								alert("애송이뇨속");
+							}
+						}		
+					);
+				}
+			);
+			
+		}		
+	);
+	
+</script>
+</head>
+<body>
+	<h1>이것은 html</h1>
+	<button id="btn1">OK</button>
+	<button id="btn2">xml OK</button>
+	<div id="div1"></div>
+</body>
+</html>

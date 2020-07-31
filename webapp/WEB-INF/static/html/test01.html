@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+<script>
+	
+	$(document).ready(
+		function()		{
+			$("#btn1").on("click",
+				function (e) {
+					$.ajax(
+						{
+							url : "/ajax",
+							type: "POST",
+							data: {v:"1234"},
+							dataType : "json",
+							success : function(data)	{
+								console.log(data);
+								var html  = "<div>" + data.id + "</div>";
+								html     += "<div>" + data.pass + "</div>";
+								html     += "<div>" + data.v + "</div>";
+								$("#div1").html(html);
+							},
+							error   : function(xhr)	{
+								console.log(xhr)
+								alert("애송이뇨속");
+							}
+						}		
+					);
+				}
+			)
+		}		
+	);
+	
+</script>
+</head>
+<body>
+	<h1>이것은 html</h1>
+	<button id="btn1">OK</button>
+	<div id="div1"></div>
+</body>
+</html>

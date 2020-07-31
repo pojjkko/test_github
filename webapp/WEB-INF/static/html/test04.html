@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+<script>
+	// 동일 주소원칙 위반으로 조회 안됨
+	$(document).ready(
+		function()		{
+			$("#btn1").on("click",
+				function (e) {
+					$.ajax(
+						{
+							url : "http://61.43.246.153/openapi-data/service/busanBIMS2/busInfo?lineid=5200179000&serviceKey=VVYz4W%2BGHKMfPgAWB%2FNEJ0pWPvbjfbjo2k92wTKBbcYMKQQN566vxUAr3QmK7XErBUhhsfp%2BJKu2O3AYiGjECg%3D%3D&pageNo=1&numOfRows=10&bstopnm=%EB%B6%80%EC%82%B0%EC%8B%9C%EC%B2%AD&arsno=13045",
+							type: "POST",
+							//data: {v:"1234"},
+							dataType : "json",
+							success : function(data)	{
+								console.log(data);
+								
+								$("#div1").html('k');
+							},
+							error   : function(xhr)	{
+								console.log(xhr);
+								alert("애송이뇨속");
+							}
+						}		
+					);
+				}
+			)
+		}		
+	);
+	
+</script>
+</head>
+<body>
+	<h1>이것은 html (list)</h1>
+	<button id="btn1">OK</button>
+	<div id="div1"></div>
+</body>
+</html>
